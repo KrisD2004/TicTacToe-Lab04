@@ -138,5 +138,36 @@
             }
             return isValid;
         }
+
+        static string CheckForWin()
+        {
+            // Check rows
+            for (int row = 0; row < 3; row++)
+            {
+                if (Board[row][0] == Board[row][1] && Board[row][1] == Board[row][2])
+                {
+                    return Board[row][0];
+                }
+            }
+
+            // Check columns
+            for (int col = 0; col < 3; col++)
+            {
+                if (Board[0][col] == Board[1][col] && Board[1][col] == Board[2][col])
+                {
+                    return Board[0][col];
+                }
+            }
+
+            // Check diagonals
+            if ((Board[0][0] == Board[1][1] && Board[1][1] == Board[2][2]) ||
+                (Board[0][2] == Board[1][1] && Board[1][1] == Board[2][0]))
+            {
+                return Board[1][1];
+            }
+
+            // No winner
+            return null;
+        }
     }
 }
