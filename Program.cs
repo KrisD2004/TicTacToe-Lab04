@@ -1,9 +1,7 @@
 ﻿namespace TicTacToe_LAB04
 {
-    class Player
+    public class Player
     {
-        //created new class due to more than one data type
-
         public string Name;
         public string Marker;
         public Player(string name, string marker)
@@ -18,97 +16,59 @@
         public static string[][] Board;
         static void Main(string[] args)
         {
-
-            Console.WriteLine("Hi! Lets play TicTacToe!!");
-            Console.Write("Player 1's name: ");
+            Console.WriteLine("Hi. Lets play TicTacToe!!");
+            Console.Write("Player1's name: ");
             string player1name = Console.ReadLine();
             Player player1 = new Player(player1name, "X");
 
-
-            Console.Write("Player 2's name: ");
+            Console.Write("Player2's name: ");
             string player2name = Console.ReadLine();
             Player player2 = new Player(player2name, "O");
 
-            Console.WriteLine("===== {0} vs {1} =====", player1.Name, player2.Name);
+            Console.WriteLine("====== {0} vs {1} =====", player1.Name, player2.Name);
 
-            Board = new string[][]
-            {
-                new string [] {"1", "2", "3" },
-                new string [] { "4", "5", "6" },
-                new string [] { "7", "8", "9" }
+            Board = new string[][] {
+               new string[] {"1", "2", "3"},
+               new string[] {"4", "5", "6"},
+               new string[] {"7", "8", "9"}
             };
 
-            Console.WriteLine("Here is your board");
+            Console.WriteLine("Heres the board");
             DisplayBoard();
-
 
             Player currentPlayer = player1;
             string winner = null;
             while (winner == null)
             {
-                Console.Write("Its {0}'s turn!", currentPlayer.Name );
+                Console.WriteLine("It's {0}'s turn!", currentPlayer.Name);
 
                 Console.WriteLine("Please choose a slot.");
                 DisplayBoard();
                 string selectedSlot = Console.ReadLine();
 
-                if (selectedSlot == "1")
+                //Check if slot has already been selected
+                bool isValid = SelectionIsValid(selectedSlot);
+                if (isValid)
                 {
-
-                    Board[0][0] = currentPlayer.Marker;
+                    int[] indexes = SelectionToIndexes(selectedSlot);
+                    int row = indexes[0];
+                    int column = indexes[1];
+                    Board[row][column] = currentPlayer.Marker;
                 }
-                else if (selectedSlot == "2")
+                else
                 {
-                    Board[0][1] = currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "3")
-                {
-                    Board[0][2] =  currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "4")
-                {
-                    Board[1][0] = currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "5")
-                {
-                    Board[1][1] = currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "6")
-                {
-                    Board[1][2] = currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "7")
-                {
-                    Board[2][0] = currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "8")
-                {
-                    Board[2][1] = currentPlayer.Marker;
-
-                }
-                else if (selectedSlot == "9")
-                {
-                    Board[2][2] = currentPlayer.Marker;
-
+                    continue;
                 }
 
                 if (currentPlayer == player1)
                 {
                     currentPlayer = player2;
-                } else if (currentPlayer == player2)
+                }
+                else if (currentPlayer == player2)
                 {
                     currentPlayer = player1;
                 }
-
             }
-
-
         }
 
         static void DisplayBoard()
@@ -116,6 +76,67 @@
             Console.WriteLine("|{0}||{1}||{2}|", Board[0][0], Board[0][1], Board[0][2]);
             Console.WriteLine("|{0}||{1}||{2}|", Board[1][0], Board[1][1], Board[1][2]);
             Console.WriteLine("|{0}||{1}||{2}|", Board[2][0], Board[2][1], Board[2][2]);
+        }
+        static int[] SelectionToIndexes(string selectedSlot)
+        {
+            int[] indexes = new int[2];
+            switch (selectedSlot)
+            {
+                case "1":
+                    indexes[0] = 0;
+                    indexes[1] = 0;
+                    break;
+                case "2":
+                    indexes[0] = 0;
+                    indexes[1] = 1;
+                    break;
+                case "3":
+                    indexes[0] = 0;
+                    indexes[1] = 2;
+                    break;
+                case "4":
+                    indexes[0] = 1;
+                    indexes[1] = 0;
+                    break;
+                case "5":
+                    indexes[0] = 1;
+                    indexes[1] = 1;
+                    break;
+                case "6":
+                    indexes[0] = 1;
+                    indexes[1] = 2;
+                    break;
+                case "7":
+                    indexes[0] = 2;
+                    indexes[1] = 0;
+                    break;
+                case "8":
+                    indexes[0] = 2;
+                    indexes[1] = 1;
+                    break;
+                case "9":
+                    indexes[0] = 2;
+                    indexes[1] = 2;
+                    break;
+            }
+            return indexes;
+        }
+        static bool SelectionIsValid(string selectedSlot)
+        {
+            bool isValid = true;
+            int[] indexes = SelectionToIndexes(selectedSlot);
+            int row = indexes[0];
+            int column = indexes[1];
+            string slotValue = Board[row][column];
+            if (slotValue == "X" || slotValue == "O")
+            {
+                isValid = false;
+            }
+            if (isValid == false)
+            {
+                Console.WriteLine("Selection is invalid");
+            }
+            return isValid;
         }
     }
 }
