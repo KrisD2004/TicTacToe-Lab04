@@ -11,9 +11,16 @@
         }
     }
 
-    internal class Program
+    public class Program
     {
         public static string[][] Board;
+        public static Player currentPlayer;
+
+
+
+
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hi. Lets play TicTacToe!!");
@@ -84,7 +91,7 @@
             Console.WriteLine("|{0}||{1}||{2}|", Board[1][0], Board[1][1], Board[1][2]);
             Console.WriteLine("|{0}||{1}||{2}|", Board[2][0], Board[2][1], Board[2][2]);
         }
-        static int[] SelectionToIndexes(string selectedSlot)
+       public  static int[] SelectionToIndexes(string selectedSlot)
         {
             int[] indexes = new int[2];
             switch (selectedSlot)
@@ -128,7 +135,7 @@
             }
             return indexes;
         }
-        static bool SelectionIsValid(string selectedSlot)
+        public static bool SelectionIsValid(string selectedSlot)
         {
             bool isValid = true;
             int[] indexes = SelectionToIndexes(selectedSlot);
@@ -146,9 +153,9 @@
             return isValid;
         }
 
-        static string CheckForWin()
+        public static string CheckForWin()
         {
-            // Check rows
+            // Checking the rows
             for (int row = 0; row < 3; row++)
             {
                 if (Board[row][0] == Board[row][1] && Board[row][1] == Board[row][2])
@@ -157,7 +164,7 @@
                 }
             }
 
-            // Check columns
+            // Checking columns
             for (int col = 0; col < 3; col++)
             {
                 if (Board[0][col] == Board[1][col] && Board[1][col] == Board[2][col])
@@ -176,5 +183,20 @@
             // No winner
             return null;
         }
+
+        public static void SwitchPlayers(Player player1, Player player2)
+        {
+            if (currentPlayer == player1)
+            {
+                currentPlayer = player2;
+            }
+            else
+            {
+                currentPlayer = player1;
+            }
+        }
+
+
+
     }
 }
