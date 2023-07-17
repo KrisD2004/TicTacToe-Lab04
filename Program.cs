@@ -68,6 +68,13 @@
                 {
                     currentPlayer = player1;
                 }
+
+                winner = CheckForWin();
+                if (winner != null)
+                {
+                    Console.WriteLine("Congratulations, {0} wins!", winner);
+                    break;
+                }
             }
         }
 
